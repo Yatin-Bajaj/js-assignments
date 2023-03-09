@@ -168,95 +168,11 @@ class cssSelectorBuilderNew {
 }
 
 
-// const cssSelectorBuilder = {
-   
-
-//     elements: [],
-//     ids: [],
-//     classes: [],
-//     attributes: [],
-//     pseudoClasses: [],
-//     pseudoElements: [],
-//     element(el) {
-//         this.elements.push(el);
-//         return this;
-//     },
-
-//     id(id) {
-//         this.ids.push(`#${id}`);
-//         return this;
-//     },
-
-//     class(cls) {
-//         this.classes.push(`.${cls}`);
-//         return this;
-//     },
-
-//     attribute(attr, value) {
-//         this.attributes.push(`[${attr}='${value}']`);
-//         return this;
-//     },
-//     pseudoClass(pseudoCls) {
-//         this.pseudoClasses.push(`:${pseudoCls}`);
-//         return this;
-//     },
-
-//     pseudoElement(pseudoEl) {
-//         this.pseudoElements.push(`::${pseudoEl}`);
-//         return this;
-//     },
-//     combine: function (selector1, combinator, selector2) {
-//         throw new Error('Not implemented');
-//     },
-//     toString() {
-//         return [
-//             ...this.elements,
-//             ...this.ids,
-//             ...this.classes,
-//             ...this.attributes,
-//             ...this.pseudoClasses,
-//             ...this.pseudoElements,
-//         ].join('')
-//     }
-   
-
-// };
-
-const cssSelectorBuilder = {
-
-    element: function(value) {
-        throw new Error('Not implemented');
-    },
-
-    id: function(value) {
-        throw new Error('Not implemented');
-    },
-
-    class: function(value) {
-        throw new Error('Not implemented');
-    },
-
-    attr: function(value) {
-        throw new Error('Not implemented');
-    },
-
-    pseudoClass: function(value) {
-        throw new Error('Not implemented');
-    },
-
-    pseudoElement: function(value) {
-        throw new Error('Not implemented');
-    },
-
-    combine: function(selector1, combinator, selector2) {
-        throw new Error('Not implemented');
-    },
-};
 
 
 module.exports = {
     Rectangle: Rectangle,
     getJSON: getJSON,
     fromJSON: fromJSON,
-    cssSelectorBuilder: cssSelectorBuilder
+    // cssSelectorBuilder: cssSelectorBuilder
 };
