@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /********************************************************************************************
  *                                                                                          *
@@ -6,8 +6,6 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String  *
  *                                                                                          *
  ********************************************************************************************/
-
-
 
 /**
  * Returns the result of concatenation of two strings.
@@ -22,9 +20,8 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+    return value1 + value2;
 }
-
 
 /**
  * Returns the length of given string.
@@ -38,7 +35,8 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+    const length = value.length;
+    return length;
 }
 
 /**
@@ -55,7 +53,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -69,9 +67,13 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+    const valueArray = value.split(" ");
+    const firstName = valueArray[1];
+    let lastName = valueArray[2];
+    lastName = lastName.substring(0, lastName.length - 1);
+    const fullName = `${firstName} ${lastName}`;
+    return fullName;
 }
-
 
 /**
  * Returns a first char of the given string.
@@ -84,7 +86,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+    return value.at(0);
 }
 
 /**
@@ -99,7 +101,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.trim();
 }
 
 /**
@@ -114,12 +116,12 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+    return value.repeat(count);
 }
 
 /**
  * Remove the first occurrence of string inside another string
- * 
+ *
  * @param {string} str
  * @param {string} value
  * @return {string}
@@ -130,7 +132,12 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    let index = str.indexOf(value);
+    if (index === -1) {
+        return str;
+    }
+    const newString = str.slice(0, index) + str.slice(index + value.length);
+    return newString;
 }
 
 /**
@@ -145,9 +152,9 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    const newString = str.slice(1, -1);
+    return newString;
 }
-
 
 /**
  * Converts all characters of the specified string into the upper case
@@ -160,7 +167,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
@@ -174,7 +181,8 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    const emailArray = str.split(";");
+    return emailArray;
 }
 
 /**
@@ -201,9 +209,26 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+    let resultString = "";
+    for (let row = 0; row < height; row++) {
+        for (let column = 0; column < width; column++) {
+            if (column == 0) {
+                if (row == 0) resultString += "┌";
+                else if (row == height - 1) resultString += "└";
+                else resultString += "│";
+            } else if (column == width - 1) {
+                if (row == 0) resultString += "┐";
+                else if (row == height - 1) resultString += "┘";
+                else resultString += "│";
+            } else {
+                if (row == 0 || row == height - 1) resultString += "─";
+                else resultString += " ";
+            }
+        }
+        resultString += "\n";
+    }
+    return resultString;
 }
-
 
 /**
  * Encode specified string with ROT13 cipher
@@ -221,9 +246,21 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    let newString = "";
+    for (let index = 0; index < str.length; index++) {
+        let charCode = str.charCodeAt(index);
+        if (charCode >= 65 && charCode <= 90) {
+            // uppercase letters
+            charCode = ((charCode - 65 + 13) % 26) + 65;
+        } else if (charCode >= 97 && charCode <= 122) {
+            // lowercase letters
+            charCode = ((charCode - 97 + 13) % 26) + 97;
+        }
+        newString = newString + String.fromCharCode(charCode);
+    }
+    return newString;
 }
-
+console.log(encodeToRot13("hello"));
 /**
  * Returns true if the value is string; otherwise false.
  * @param {string} value
@@ -238,38 +275,51 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    return typeof value?.valueOf() === "string";
 }
-
 
 /**
  * Returns playid card id.
- * 
+ *
  * Playing cards inittial deck inclides the cards in the following order:
- * 
+ *
  *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
  *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
  *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
  *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
- * 
+ *
  * (see https://en.wikipedia.org/wiki/Standard_52-card_deck)
  * Function returns the zero-based index of specified card in the initial deck above.
- * 
+ *
  * @param {string} value
  * @return {number}
  *
  * @example
  *   'A♣' => 0
- *   '2♣' => 1 
+ *   '2♣' => 1
  *   '3♣' => 2
  *     ...
  *   'Q♠' => 50
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
-}
+   
+  
+    const symbolMap = new Map();
+    symbolMap.set("A", 0); 
+    symbolMap.set("J", 10);
+    symbolMap.set("Q", 11);
+    symbolMap.set("K", 12);
+    symbolMap.set("♣", 0);
+    symbolMap.set("♦", 1);
+    symbolMap.set("♥", 2);
+    symbolMap.set("♠", 3);
 
+    const suit = symbolMap.get(value.slice(-1));
+    const number = symbolMap.get(value.slice(0,-1)) ?? ( Number(value.slice(0,-1)) - 1 );
+    const result = 13 * suit + number;
+    return result;
+}
 
 module.exports = {
     concatenateStrings: concatenateStrings,
@@ -286,5 +336,5 @@ module.exports = {
     getRectangleString: getRectangleString,
     encodeToRot13: encodeToRot13,
     isString: isString,
-    getCardId: getCardId
+    getCardId: getCardId,
 };

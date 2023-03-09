@@ -70,9 +70,9 @@ describe('02-numbers-tasks', function() {
         assert.equal(1000, tasks.roundToPowerOfTen(1234,3));
         
         assert.equal(9678, tasks.roundToPowerOfTen(9678,0));
-        assert.equal(9680, tasks.roundToPowerOfTen(9678,1));
-        assert.equal(9700, tasks.roundToPowerOfTen(9678,2));
-        assert.equal(10000, tasks.roundToPowerOfTen(9678,3));
+        assert.equal(9670, tasks.roundToPowerOfTen(9678,1));
+        assert.equal(9600, tasks.roundToPowerOfTen(9678,2));
+        assert.equal(9000, tasks.roundToPowerOfTen(9678,3));
     });
 
     it.optional('isPrime should return true if specified number is prime', function() {

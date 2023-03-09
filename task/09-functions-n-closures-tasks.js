@@ -25,10 +25,11 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.acos(x))
  *
  */
-function getComposition(f,g) {
-    throw new Error('Not implemented');
+function getComposition(f, g) {
+    return function (x) {
+        return f(g(x))
+    }
 }
-
 
 /**
  * Returns the math power function with the specified exponent
@@ -47,7 +48,9 @@ function getComposition(f,g) {
  *
  */
 function getPowerFunction(exponent) {
-    throw new Error('Not implemented');
+    return function (X) {
+        return X ** exponent;
+    }
 }
 
 
@@ -64,8 +67,29 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
+
 function getPolynom() {
-    throw new Error('Not implemented');
+    const arg = Array.from(arguments);
+    if (arguments.length === 3) {
+        return function (x) {
+            return ((arg[0] * (x ** 2)) + (arg[1] * x) + arg[2])
+        }
+    }
+
+    if (arguments.length === 2) {
+        return function (x) {
+            return ((arg[0] * x) + arg[1])
+        }
+    }
+
+    if (arguments.length === 1) {
+        return function (x) {
+            return (arg[0]);
+        }
+    }
+    return null;
+
+
 }
 
 
@@ -84,7 +108,17 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-    throw new Error('Not implemented');
+    let count = true;
+    let result;
+    return function () {
+        if (count) {
+            count = false;
+            result = func();
+            return result;
+        } else {
+            return result;
+        }
+    }
 }
 
 
@@ -103,10 +137,33 @@ function memoize(func) {
  * }, 2);
  * retryer() => 2
  */
+
 function retry(func, attempts) {
-    throw new Error('Not implemented');
+    return function () {
+        for (let index = 1; index <= attempts; index++) {
+            try {
+                return func.apply(this, arguments);
+            } catch (err) {
+               if(index === attempts){
+                return attempts;
+               }
+            }
+        }
+    }   
 }
 
+// Example to use above logic
+function divide(a, b) {
+    if (b === 0) {
+        throw new Error("Cannot divide by zero");
+    }
+    return a / b;
+}
+
+const retryDivide = retry(divide, 3);
+
+console.log(retryDivide(10, 0)); // return 3 (Number of attempts)
+console.log(retryDivide(10, 2)); // returns 5
 
 /**
  * Returns the logging wrapper for the specified method,
@@ -132,7 +189,18 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-    throw new Error('Not implemented');
+    return function () {
+        var arr = [].slice.call(arguments);
+        var str = JSON.stringify(arr);
+        //console.log(str);
+        str = str.slice(1, -1);
+        str = func.name + '(' + str + ')';
+        logFunc(str + " starts");
+        var res = func.apply(this, arr);
+        logFunc(str + " ends");
+        return res;
+    }
+
 }
 
 
@@ -150,10 +218,22 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
-    throw new Error('Not implemented');
+    let arr = []
+    if (arguments.length > 1) {
+        for (let index = 1; index < arguments.length; index++) {
+            arr.push(arguments[index])
+        }
+    }
+    return function (...args) {
+        args.forEach(item => arr.push(item));
+        var result = arr.reduce((prev, curr) => prev + curr, "");
+        return result;
+    }
 }
-
-
+var fn = function (x1, x2, x3, x4) { return x1 + x2 + x3 + x4; };
+console.log(partialUsingArguments(fn, 'a')('b', 'c', 'd'))
+console.log(partialUsingArguments(fn, 'a', 'b')('c', 'd'))
+console.log(partialUsingArguments(fn, 'a', 'b', 'c', 'd')())
 /**
  * Returns the id generator function that returns next integer starting from specified number every time when invoking.
  *
@@ -171,7 +251,17 @@ function partialUsingArguments(fn) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
-    throw new Error('Not implemented');
+
+    // return function* generator() {
+    //     while (true) {
+    //         yield (++startFrom)
+    //     }
+    // }
+
+    return function(){
+        return startFrom++;
+    }
+    
 }
 
 

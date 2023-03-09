@@ -33,7 +33,16 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+    for (let index = 99; index > 2;) {
+        yield `${index} bottles of beer on the wall, ${index} bottles of beer.`
+        yield `Take one down and pass it around, ${--index} bottles of beer on the wall.`
+    }
+    yield '2 bottles of beer on the wall, 2 bottles of beer.';
+    yield 'Take one down and pass it around, 1 bottle of beer on the wall.';
+    yield '1 bottle of beer on the wall, 1 bottle of beer.';
+    yield 'Take one down and pass it around, no more bottles of beer on the wall.';
+    yield 'No more bottles of beer on the wall, no more bottles of beer.';
+    yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';
 }
 
 
@@ -47,7 +56,17 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+
+    let num1 = 0;
+    let num2 = 1;
+    let result;
+
+    while (1) {
+        result = num1;
+        num1 = num2;
+        num2 = result + num2;
+        yield result
+    }
 }
 
 
@@ -126,7 +145,27 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    const iterator1 = source1();
+    const iterator2 = source2();
+    let item1 = iterator1.next().value;
+    let item2 = iterator2.next().value;
+    while (item1 !== undefined || item2 !== undefined) {
+        if (item1 === undefined) {
+            yield item2;
+            item2 = iterator2.next().value;
+        } else if (item2 === undefined) {
+            yield item1;
+            item1 = iterator1.next().value;
+        } else {
+            if (item1 <= item2) {
+                yield item1;
+                item1 = iterator1.next().value;
+            } else {
+                yield item2;
+                item2 = iterator2.next().value;
+            }
+        }
+    }
 }
 
 

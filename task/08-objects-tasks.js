@@ -23,7 +23,13 @@
  *    console.log(r.getArea());   // => 200
  */
 function Rectangle(width, height) {
-    throw new Error('Not implemented');
+    this.width = width;
+    this.height = height;
+
+}
+Rectangle.prototype.getArea = function () {
+    return this.width * this.height;
+
 }
 
 
@@ -38,7 +44,7 @@ function Rectangle(width, height) {
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
 function getJSON(obj) {
-    throw new Error('Not implemented');
+    return JSON.stringify(obj);
 }
 
 
@@ -54,7 +60,10 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    throw new Error('Not implemented');
+    const JavaScriptObj = JSON.parse(json)
+    const obj = Object.create(proto);
+    return Object.assign(obj, JavaScriptObj)
+
 }
 
 
@@ -105,6 +114,113 @@ function fromJSON(proto, json) {
  *
  *  For more examples see unit tests.
  */
+
+class cssSelectorBuilderNew {
+    constructor() {
+        this.elements = [];
+        this.ids = [];
+        this.classes = [];
+        this.attributes = [];
+        this.pseudoClasses = [];
+        this.pseudoElements = [];
+    }
+
+    element(el) {
+        this.elements.push(el);
+        return this;
+    }
+
+    id(id) {
+        this.ids.push(`#${id}`);
+        return this;
+    }
+
+    class(cls) {
+        this.classes.push(`.${cls}`);
+        return this;
+    }
+
+    attribute(attr, value) {
+        this.attributes.push(`[${attr}='${value}']`);
+        return this;
+    }
+
+    pseudoClass(pseudoCls) {
+        this.pseudoClasses.push(`:${pseudoCls}`);
+        return this;
+    }
+
+    pseudoElement(pseudoEl) {
+        this.pseudoElements.push(`::${pseudoEl}`);
+        return this;
+    }
+
+    build() {
+        return [
+            ...this.elements,
+            ...this.ids,
+            ...this.classes,
+            ...this.attributes,
+            ...this.pseudoClasses,
+            ...this.pseudoElements,
+        ].join('');
+    }
+}
+
+
+// const cssSelectorBuilder = {
+   
+
+//     elements: [],
+//     ids: [],
+//     classes: [],
+//     attributes: [],
+//     pseudoClasses: [],
+//     pseudoElements: [],
+//     element(el) {
+//         this.elements.push(el);
+//         return this;
+//     },
+
+//     id(id) {
+//         this.ids.push(`#${id}`);
+//         return this;
+//     },
+
+//     class(cls) {
+//         this.classes.push(`.${cls}`);
+//         return this;
+//     },
+
+//     attribute(attr, value) {
+//         this.attributes.push(`[${attr}='${value}']`);
+//         return this;
+//     },
+//     pseudoClass(pseudoCls) {
+//         this.pseudoClasses.push(`:${pseudoCls}`);
+//         return this;
+//     },
+
+//     pseudoElement(pseudoEl) {
+//         this.pseudoElements.push(`::${pseudoEl}`);
+//         return this;
+//     },
+//     combine: function (selector1, combinator, selector2) {
+//         throw new Error('Not implemented');
+//     },
+//     toString() {
+//         return [
+//             ...this.elements,
+//             ...this.ids,
+//             ...this.classes,
+//             ...this.attributes,
+//             ...this.pseudoClasses,
+//             ...this.pseudoElements,
+//         ].join('')
+//     }
+   
+
+// };
 
 const cssSelectorBuilder = {
 
